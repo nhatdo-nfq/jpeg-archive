@@ -11,5 +11,6 @@ before_install:
     - make SHARED=0 CC='gcc -static'
     - make install
     - sudo ln -s /opt/mozjpeg/lib64 /opt/mozjpeg/lib
+    - cd ../..
 script:
-    - pwd && make && make install && cd test && test.sh
+    - make && make install && cd test && test.sh
