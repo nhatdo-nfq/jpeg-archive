@@ -14,7 +14,6 @@ before_install:
     - cd ../..
 script:
     - pwd
-    - LDFLAGS="--static“ make
+    - LDFLAGS="--static" make
     - sudo make install
-    - cd test
-    - ./test.sh
+    - cd test && ./test.sh
