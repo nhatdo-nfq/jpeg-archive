@@ -16,4 +16,5 @@ script:
     - pwd
     - LDFLAGS="--static" make
     - sudo make install
+    - ./jpeg-recompress --version
     - cd test && ./test.sh
