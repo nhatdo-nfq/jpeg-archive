@@ -1,7 +1,7 @@
 language: c
 jobs:
     include:
-        - os: linux
+        #- os: linux
         - os: osx
           osx_image: xcode11
 compiler:
