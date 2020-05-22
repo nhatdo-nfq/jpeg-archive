@@ -17,5 +17,9 @@ before_install:
     - sudo ln -s /opt/mozjpeg/lib64 /opt/mozjpeg/lib
     - cd ../..
 script:
-    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then LDFLAGS="--static" make && sudo make install && ./jpeg-recompress --version && cd test && ./test.sh ; fi
-    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then make && sudo make install && ./jpeg-recompress --version && cd test && ./test.sh ; fi
+    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then LDFLAGS="--static" make ; fi
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then make  ; fi
+    - sudo make install
+    - ./jpeg-recompress --version
+    - cd test
+    - ./test.sh
