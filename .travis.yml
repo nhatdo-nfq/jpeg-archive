@@ -9,7 +9,7 @@ compiler:
     - gcc
 before_install:
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -y cmake zlib1g-dev git libpng16-dev nasm ; fi
-    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install nasm zlib libpng ; fi
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install nasm zlib libpng libjpeg ; fi
     - git clone https://github.com/mozilla/mozjpeg.git
     - cd mozjpeg
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then mkdir build && cd build && cmake -G"Unix Makefiles" -DPNG_SUPPORTED=TRUE ../ && make SHARED=0 CC='gcc -static' && make install ; fi
@@ -17,8 +17,9 @@ before_install:
     - sudo ln -s /opt/mozjpeg/lib64 /opt/mozjpeg/lib
     - cd ../..
 script:
+    - ls -la /usr/local/Cellar/jpeg/
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then LDFLAGS="--static" make ; fi
-    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then make  ; fi
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then JPEG_INCLUDES="/usr/local/Cellar/jpeg/9d/include" make  ; fi
     - sudo make install
     - ./jpeg-recompress --version
     - cd test
