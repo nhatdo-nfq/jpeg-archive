@@ -34,4 +34,5 @@ script:
     - cd test
     - ./test.sh
     - cd ..
-    - zip jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -j osx-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
+    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then zip -j linux-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
