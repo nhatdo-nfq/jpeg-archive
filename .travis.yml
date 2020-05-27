@@ -1,7 +1,7 @@
 language: c
 jobs:
     include:
-        #- os: linux
+        - os: linux
         - os: osx
           osx_image: xcode11
 compiler:
@@ -17,9 +17,10 @@ before_install:
     - sudo ln -s /opt/mozjpeg/lib64 /opt/mozjpeg/lib
     - cd ../..
 script:
-    - ls -la /usr/local/Cellar/jpeg/
+    - ls -la /opt/mozjpeg/lib
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then ls -la /usr/local/Cellar/jpeg/ ; fi
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then LDFLAGS="--static" make ; fi
-    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then JPEG_INCLUDES="/usr/local/Cellar/jpeg/9d/include" make  ; fi
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then MOZJPEG_PREFIX="/opt/mozjpeg/lib" make ; fi
     - sudo make install
     - ./jpeg-recompress --version
     - cd test
