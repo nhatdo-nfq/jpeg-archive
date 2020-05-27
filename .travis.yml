@@ -2,17 +2,18 @@ language: c
 jobs:
     include:
         - os: linux
-        - os: osx
-          osx_image: xcode11
+#        - os: osx
+#          osx_image: xcode11
 deploy:
     provider: releases
     skip_cleanup: true
-    api_key: $github_token
+    api_key:
+        secure: $github_token
     file: "jpeg-archive.zip"
     on:
-        branch: master
+        tags: true
 compiler:
-    - clang
+#    - clang
     - gcc
 before_install:
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -y cmake zlib1g-dev git libpng16-dev nasm zip ; fi
@@ -32,5 +33,5 @@ script:
     - ./jpeg-recompress --version
     - cd test
     - ./test.sh
-    - pwd
+    - cd ..
     - zip jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash
