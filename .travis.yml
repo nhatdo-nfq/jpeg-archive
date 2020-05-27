@@ -1,11 +1,11 @@
 language: c
 jobs:
     include:
-#        - os: linux
+        - os: linux
         - os: osx
           osx_image: xcode11
 compiler:
-#    - clang
+    - clang
     - gcc
 before_install:
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -y cmake zlib1g-dev git libpng16-dev nasm ; fi
