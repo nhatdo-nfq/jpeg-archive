@@ -4,12 +4,19 @@ jobs:
         - os: linux
         - os: osx
           osx_image: xcode11
+deploy:
+    provider: releases
+    skip_cleanup: true
+    api_key: $github_token
+    file: "jpeg-archive.zip"
+    on:
+        branch: master
 compiler:
     - clang
     - gcc
 before_install:
-    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -y cmake zlib1g-dev git libpng16-dev nasm ; fi
-    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install nasm zlib libpng libjpeg ; fi
+    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt-get install -y cmake zlib1g-dev git libpng16-dev nasm zip ; fi
+    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install nasm zlib libpng libjpeg zip ; fi
     - git clone https://github.com/mozilla/mozjpeg.git
     - cd mozjpeg
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then mkdir build && cd build && cmake -G"Unix Makefiles" -DPNG_SUPPORTED=TRUE ../ && make SHARED=0 CC='gcc -static' && make install ; fi
@@ -25,3 +32,5 @@ script:
     - ./jpeg-recompress --version
     - cd test
     - ./test.sh
+    - pwd
+    - zip jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash
