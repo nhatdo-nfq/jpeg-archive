@@ -9,9 +9,9 @@ deploy:
     skip_cleanup: true
     api_key:
         secure: $github_token
-    file: "jpeg-archive.zip"
+    file: "upload/*"
     on:
-        tags: false
+        tags: true
 compiler:
 #    - clang
     - gcc
@@ -34,5 +34,7 @@ script:
     - cd test
     - ./test.sh
     - cd ..
+    - mkdir upload
+    - cd upload
     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -j osx-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then zip -j linux-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
