@@ -1,9 +1,9 @@
 language: c
 jobs:
     include:
-        - os: linux
-#        - os: osx
-#          osx_image: xcode11
+#        - os: linux
+        - os: osx
+          osx_image: xcode11
 deploy:
     provider: releases
     skip_cleanup: true
