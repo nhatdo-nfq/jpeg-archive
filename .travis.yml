@@ -5,7 +5,7 @@ jobs:
         - os: osx
           osx_image: xcode11
 before_deploy:
-    - export TRAVIS_TAG="1.0.$TRAVIS_BUILD_NUMBER-$TRAVIS_OS_NAME"
+    - export TRAVIS_TAG="v1.0.$TRAVIS_BUILD_NUMBER-$TRAVIS_OS_NAME"
     - echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
     - git config --local user.name "$USER_NAME"
     - git config --local user.email "$USER_EMAIL"
@@ -47,5 +47,5 @@ script:
     - cd test
     - ./test.sh
     - cd ..
-    - if [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -j osx-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
-    - if [ "$TRAVIS_OS_NAME" = "linux" ]; then zip -j linux-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
+    - ls -la /usr/local/bin/
+    - zip -j $TRAVIS_OS_NAME-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash
