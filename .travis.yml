@@ -21,7 +21,7 @@ deploy:
     api_key: $github_token
     file_glob: true
     file:
-        - upload/$TRAVIS_OS_NAME-jpeg-archive.zip
+        - $TRAVIS_OS_NAME-jpeg-archive.zip
     on:
         branch: master
         repo: nhatdo-nfq/jpeg-archive
