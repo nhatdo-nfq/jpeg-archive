@@ -47,5 +47,5 @@ script:
     - cd test
     - ./test.sh
     - cd ..
-    - ls -la /usr/local/bin/
+    - ls -la /usr/local/bin/jpeg*
     - zip -j $TRAVIS_OS_NAME-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash
