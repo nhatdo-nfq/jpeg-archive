@@ -4,24 +4,27 @@ jobs:
         - os: linux
         - os: osx
           osx_image: xcode11
-deploy:
-    provider: releases
-    tag_name: $TRAVIS_TAG
-    name: $TRAVIS_TAG
-    overwrite: true
-    target_commitish: $TRAVIS_COMMIT
-    skip_cleanup: true
-    api_key:
-        secure: $github_token
-    file: "upload/$TRAVIS_OS_NAME-jpeg-archive.zip"
-    on:
-        branch: master
 before_deploy:
     - export TRAVIS_TAG="1.0.$TRAVIS_BUILD_NUMBER"
     - echo "$TRAVIS_TAG" "$TRAVIS_COMMIT"
     - git config --local user.name "$USER_NAME"
     - git config --local user.email "$USER_EMAIL"
     - git tag "$TRAVIS_TAG" "$TRAVIS_COMMIT"
+
+deploy:
+    provider: releases
+    tag_name: $TRAVIS_TAG
+    target_commitish: $TRAVIS_COMMIT
+    name: $TRAVIS_TAG
+    overwrite: true
+    skip_cleanup: true
+    api_key: $github_token
+    file_glob: true
+    file:
+        - upload/$TRAVIS_OS_NAME-jpeg-archive.zip
+    on:
+        branch: master
+        repo: nhatdo-nfq/jpeg-archive
 compiler:
 #    - clang
     - gcc
@@ -44,7 +47,5 @@ script:
     - cd test
     - ./test.sh
     - cd ..
-    - mkdir upload
-    - cd upload
     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -j osx-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then zip -j linux-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
