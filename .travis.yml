@@ -13,7 +13,7 @@ deploy:
     skip_cleanup: true
     api_key:
         secure: $github_token
-    file: "upload/*"
+    file: "upload/$TRAVIS_OS_NAME-jpeg-archive.zip"
     on:
         branch: master
 before_deploy:
