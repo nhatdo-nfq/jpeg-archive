@@ -1,7 +1,7 @@
 language: c
 jobs:
     include:
-#        - os: linux
+        - os: linux
         - os: osx
           osx_image: xcode11
 deploy:
@@ -11,7 +11,7 @@ deploy:
         secure: $github_token
     file: "upload/*"
     on:
-        tags: true
+        branch: master
 compiler:
 #    - clang
     - gcc
@@ -38,3 +38,4 @@ script:
     - cd upload
     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then zip -j osx-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
     - if [ "$TRAVIS_OS_NAME" = "linux" ]; then zip -j linux-jpeg-archive.zip /usr/local/bin/jpeg-archive /usr/local/bin/jpeg-recompress /usr/local/bin/jpeg-compare /usr/local/bin/jpeg-hash ; fi
+    -  ls -la upload
